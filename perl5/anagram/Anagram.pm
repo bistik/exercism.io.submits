@@ -23,10 +23,10 @@ sub equal {
     my @word      = split '' => $word;
     my @candidate = split '' => $candidate;
 
-    foreach my $i1 ( 0 .. $#word ) {
-        foreach my $i2 ( 0 .. $#candidate ) {
-            if ($word[$i1] eq $candidate[$i2]) {
-                splice @candidate, $i2, 1; 
+    foreach my $w_index ( 0 .. $#word ) {
+        foreach my $c_index ( 0 .. $#candidate ) {
+            if ($word[$w_index] eq $candidate[$c_index]) {
+                splice @candidate, $c_index, 1; 
                 last;
             }
         }
