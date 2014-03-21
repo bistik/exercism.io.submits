@@ -24,7 +24,11 @@ sub new {
 
 sub white { $_[0]->{white} }
 sub black { $_[0]->{black} }
-sub can_attack {}
+sub can_attack {
+    my $self = shift;
+    return 1 if $self->{white}->[0] == $self->{black}->[0];
+    return 1 if $self->{white}->[1] == $self->{black}->[1];
+}
 sub _is_valid_position {
     my ($self, $position) = @_;
     
@@ -39,10 +43,23 @@ sub _is_same_position {
 sub _make_board {
     my $self = shift;
 
-    $self->{board} = map { [(0) x 8] }  1 .. 8;
+    @{ $self->{board} }  = map { [qw(O O O O O O O O)] }  1 .. 8;
+    my $y1 = $self->{white}->[1];
+    my $y2 = $self->{black}->[1];
+    my $x1 = $self->{white}->[0];
+    my $x2 = $self->{black}->[0];
+
+    $self->{board}->[$x1]->[$y1] = 'W';
+    $self->{board}->[$x2]->[$y2] = 'B';
 }
 sub to_string {
     my $self = shift;
+
+    my $str;
+    foreach my $ar ( @{ $self->{board} } ) {
+        $str .= "@$ar\n";
+    }
+    return $str;
 }
 
 1;
