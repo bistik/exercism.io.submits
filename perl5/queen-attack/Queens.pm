@@ -28,6 +28,9 @@ sub can_attack {
     my $self = shift;
     return 1 if $self->{white}->[0] == $self->{black}->[0];
     return 1 if $self->{white}->[1] == $self->{black}->[1];
+    my $distance = $self->{white}->[0] - $self->{black}->[0];
+    return 1 if $self->{black}->[1] - $distance == $self->{white}->[1];
+    return 1 if $self->{black}->[1] + $distance == $self->{white}->[1];
 }
 sub _is_valid_position {
     my ($self, $position) = @_;
