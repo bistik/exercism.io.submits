@@ -1,7 +1,7 @@
 LIST
 (
 
-) head = -1, tail = -1
+) head = 0, tail = 0
 
 
 LIST.push(egg)
@@ -11,7 +11,7 @@ LIST.push(egg)
 
 LIST.push(foo) 
 (
-    0 { v: egg, next: 1, prev: 0 }
+    0 { v: egg, next: 1, prev: 1 }
     1 { v: foo, next: 0, prev: 0 }
 ) head = 0, tail = 1
 
@@ -24,7 +24,7 @@ LIST.push(bar)
 
 LIST.push(dog) 
 (
-    0 { v: egg, next: 1, prev: 2 }
+    0 { v: egg, next: 1, prev: 3 }
     1 { v: foo, next: 2, prev: 0 }
     2 { v: bar, next: 3, prev: 1 }
     3 { v: dog, next: 0, prev: 2 }
@@ -35,3 +35,4 @@ LIST.push(dog)
 # new node prev is set to previous value of tail
 # new node next is set to head
 # previous tail next is set to new node
+# head node prev is set to tail

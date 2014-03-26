@@ -6,8 +6,8 @@ use warnings;
 sub new {
     my $self = bless {} => shift;
     $self->{nodes} = undef;
-    $self->{tail} = undef;
-    $self->{head} = -1;
+    $self->{tail} = 0;
+    $self->{head} = 0;
 
     return $self;
 }
@@ -15,18 +15,28 @@ sub new {
 sub push {
     my ($self, $value) = @_;
 
-    my $node = { value => $value, next => -1, prev => -1 };
+    my ($next, $prev) = ($self->{head}, $self->{tail});
+    my $node = { value => $value, next => $next, prev => $prev };
+    $self->{tail} = push @{$self->{nodes}} => $node;
+    $self->{nodes}[$self->{head}]->{prev} = $self->{tail};
 
-    unless ( defined $self->{nodes} ) {
-        $self->{head} = 0;
-        $self->{tail} = 0;
-    } else {
-        $self->{nodes}->[-1]->{next} = @{$self->{nodes}};
-        $self->{tail}++;
-    }
-    push @{$self->{nodes}} => $node;
     use Data::Dumper;
     print Dumper $self;
+}
+
+sub pop {
+    my $self = shift;
+    
+    my $node = $self->{nodes}[$self->{tail}];
+    $self->_pop;
+    $self->{tail} = $self->{nodes}[$self->{tail}]->{prev};
+    $self->{nodes}[$self->{tail}]->{next} = $self->{head};
+
+    return $node->{value};
+}
+
+sub _pop {
+    pop @{$_[0]->{nodes}}
 }
 
 1;
