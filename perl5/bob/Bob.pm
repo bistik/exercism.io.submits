@@ -6,18 +6,36 @@ use warnings;
 sub hey {
     my $message = shift;
 
-    return say_fine() unless $message;
-    return say_fine() if $message =~ /^\s*$/;
-
-    return say_chill() if uc $message eq $message and $message =~ /[a-zA-Z]/;
-    return say_sure()  if $message =~ /\?$/;
-    return say_whatever();
+    return fine()  if    blank($message);
+    return chill() if shouting($message);
+    return sure()  if question($message);
+    return whatever();
 }
 
-sub say_chill { "Woah, chill out!" }
-sub say_fine { "Fine. Be that way!" }
-sub say_sure { "Sure." }
-sub say_whatever { "Whatever." }
+sub blank {
+    my $message = shift;
+    return 1 unless $message;
+    return 1 if $message =~ /^\s*$/;
+    return 0;
+}
+
+sub shouting {
+    my $message = shift;
+    if (uc $message eq $message and $message =~ /[a-zA-Z]/) {
+        return 1;
+    }
+    return 0;
+}
+
+sub question {
+    my $message = shift;
+    return $message =~ /\?$/ ? 1 : 0;
+}
+
+sub chill { "Woah, chill out!" }
+sub fine { "Fine. Be that way!" }
+sub sure { "Sure." }
+sub whatever { "Whatever." }
 
 1;
 
