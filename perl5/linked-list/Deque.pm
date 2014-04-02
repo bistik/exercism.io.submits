@@ -5,9 +5,11 @@ use warnings;
 
 sub new {
     my $self = bless {} => shift;
-    $self->{nodes} = undef;
-    $self->{tail} = 0;
-    $self->{head} = 0;
+    $self->{tail}  = undef;
+    $self->{head}  = undef;
+
+    # cause need to check if empty
+    $self->{total} = 0; 
 
     return $self;
 }
@@ -15,28 +17,62 @@ sub new {
 sub push {
     my ($self, $value) = @_;
 
-    my ($next, $prev) = ($self->{head}, $self->{tail});
-    my $node = { value => $value, next => $next, prev => $prev };
-    $self->{tail} = push @{$self->{nodes}} => $node;
-    $self->{nodes}[$self->{head}]->{prev} = $self->{tail};
+    my $node = {
+                 value => $value,
+                 next  => $self->{head},
+                 prev  => $self->{tail}
+               };
 
-    use Data::Dumper;
-    print Dumper $self;
+    # prev tail->next set to new node
+    $self->{tail}->{next} = $node; 
+
+    # set tail to new node
+    $self->{tail} = $node if $self->{tail};
+
+    # if empty
+    $self->{tail} = $node unless $self->{total};
+    $self->{head} = $node unless $self->{total};
+
+    $self->{total}++;
 }
 
 sub pop {
     my $self = shift;
     
-    my $node = $self->{nodes}[$self->{tail}];
-    $self->_pop;
-    $self->{tail} = $self->{nodes}[$self->{tail}]->{prev};
-    $self->{nodes}[$self->{tail}]->{next} = $self->{head};
+    my $node = $self->{tail};
+    $self->{tail} = $self->{tail}->{prev};
+
+    $self->{total}--;
 
     return $node->{value};
 }
 
-sub _pop {
-    pop @{$_[0]->{nodes}}
+sub unshift {
+    my ($self, $value) = @_;
+    my $node = {
+                 value => $value,
+                 next  => $self->{head},
+                 prev  => $self->{tail}
+               };
+
+    $self->{head}->{prev} = $node; 
+    $self->{head} = $node if $self->{head};
+    
+    $self->{tail} = $node unless $self->{total};
+    $self->{head} = $node unless $self->{total};
+
+    $self->{total}++;
 }
+
+sub shift {
+    my $self = shift;
+    
+    my $node = $self->{head};
+    $self->{head} = $self->{head}->{next};
+
+    $self->{total}--;
+    return $node->{value};
+}
+
 
 1;
