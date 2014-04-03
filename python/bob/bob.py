@@ -2,10 +2,10 @@ import re
 
 class Bob(object):
     def hey(self, message):
-        if re.match(r"^\s*$", message):
+        if not message.strip():
             return "Fine. Be that way!"
-        if message.upper() == message and re.match(r".*[a-zA-Z].*", message) :
+        if message.isupper():
             return "Woah, chill out!"
-        if re.match(r".+\?$", message):
+        if message.endswith('?'):
             return "Sure."
         return "Whatever."
