@@ -1,5 +1,3 @@
-import re
-
 class Bob(object):
     def hey(self, message):
         if not message.strip():
