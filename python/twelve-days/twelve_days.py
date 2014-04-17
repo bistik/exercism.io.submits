@@ -12,6 +12,8 @@ gifts = [
     ("Pipers Piping", "eleven"),
     ("Drummers Drumming", "twelve")
 ]
+num_in_word = ("first", "second", "third", "fourth", "fifth", "sixth",
+"seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth")
 
 def sing():
     return verses(1, 12)
@@ -32,12 +34,10 @@ def verses(start,end):
 def _verse(end):
     verse = on_the_nth_day(end - 1)
     bag = [verse,]
-    for gift in list(reversed(gifts[0:end])):
+    end = end - 1
+    for gift in gifts[end::-1]:
         bag.append(gift[1] + " " + gift[0])
     return ", ".join(bag)
 
-
 def on_the_nth_day(n):
-    num_in_word = ("first", "second", "third", "fourth", "fifth", "sixth",
-    "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth")
     return "On the " + num_in_word[n] + " day of Christmas my true love gave to me"
