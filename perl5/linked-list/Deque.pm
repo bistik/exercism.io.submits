@@ -14,7 +14,7 @@ sub new {
     return $self;
 }
 
-sub push {
+sub push :method {
     my ($self, $value) = @_;
 
     my $node = {
@@ -36,7 +36,7 @@ sub push {
     $self->{total}++;
 }
 
-sub pop {
+sub pop :method {
     my $self = shift;
     
     my $node = $self->{tail};
@@ -47,7 +47,7 @@ sub pop {
     return $node->{value};
 }
 
-sub unshift {
+sub unshift :method {
     my ($self, $value) = @_;
     my $node = {
                  value => $value,
