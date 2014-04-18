@@ -25,11 +25,7 @@ def verse(num):
     return _verse(num) + "\n"
 
 def verses(start,end):
-    end = end + 1
-    v = [] 
-    for n in range(start,end):
-        v.append(verse(n))
-    return "\n".join(v) + "\n"
+    return "\n".join([verse(n) for n in range(start,end+1)]) + "\n"
 
 def _verse(end):
     verse = on_the_nth_day(end - 1)
