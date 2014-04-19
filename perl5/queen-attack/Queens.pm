@@ -28,30 +28,29 @@ sub black { $_[0]->{black} }
 sub can_attack {
     my $self = shift;
 
-    return 1 if $self->_can_attack_straight;
-    return 1 if $self->_can_attack_diagonal;
+    return 1 if $self->_can_attack_straight or $self->_can_attack_diagonal;
 }
 
 sub _can_attack_straight {
     my $self = shift;
 
-    return 1 if $self->{white}->[0] == $self->{black}->[0];
-    return 1 if $self->{white}->[1] == $self->{black}->[1];
+    return 1 if $self->{white}->[0] == $self->{black}->[0] or
+                $self->{white}->[1] == $self->{black}->[1];
 }
 
 sub _can_attack_diagonal {
     my $self = shift;
     my $distance = $self->{white}->[0] - $self->{black}->[0];
 
-    return 1 if $self->{black}->[1] - $distance == $self->{white}->[1];
-    return 1 if $self->{black}->[1] + $distance == $self->{white}->[1];
+    return 1 if $self->{black}->[1] - $distance == $self->{white}->[1] or
+                $self->{black}->[1] + $distance == $self->{white}->[1];
 }
 
 sub _is_valid_position {
     my ($self, $position) = @_;
     
-    die "ArgumentError" if $position->[0] < 0 or $position->[1] < 0;
-    die "ArgumentError" if $position->[0] > 7 or $position->[1] > 7;
+    die "ArgumentError" if $position->[0] < 0 or $position->[1] < 0 or 
+                           $position->[0] > 7 or $position->[1] > 7;
 }
 
 sub _is_same_position {
