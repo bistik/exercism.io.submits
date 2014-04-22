@@ -1,27 +1,25 @@
-zero = [" _ ", "| |", "|_|", "   "]
-one  = ["   ", "  |", "  |", "   "]
+ocrs = [[" _ ", "| |", "|_|", "   "],
+        ["   ", "  |", "  |", "   "]]
+
 def grid(number):
-    if int(number) == 1:
-        return one
-    elif int(number) == 0:
-        return zero
-    else:
+    n = int(number)
+    if n not in xrange(len(ocrs)):
         raise ValueError("Not implemented yet")
+    return ocrs[n]
 
 def number(grid):
     _validate(grid)
-    if grid == zero:
-        return '0'
-    elif grid == one:
-        return '1'
-    else:
-        return '?'
+    for n, ocr in enumerate(ocrs):
+        if grid == ocr:
+            return str(n)
+    return '?'
 
 def _validate(grid):
-    # validate number of rows
+    """ validate number of rows """
     if len(grid) != 4:
         raise ValueError("Grid should have 4 rows")
-    # validate row length
+
+    """ validate row length """
     for row in grid:
         if len(row) != 3:
             raise ValueError("Invalid row length '%s'" %(row))
