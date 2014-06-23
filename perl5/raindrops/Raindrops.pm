@@ -18,9 +18,7 @@ sub convert {
         $raindrop .= $rain_table{$num} if grep { $_ eq $num } @factors;
     }
 
-    $raindrop  = "$number" unless $raindrop;
-
-    return $raindrop;
+    return $raindrop || $number;
 }
 
 # reused from perl5/prime-factors
